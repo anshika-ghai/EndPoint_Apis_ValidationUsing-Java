@@ -5,6 +5,7 @@ import java.util.Map;
 
 import org.junit.Assert;
 
+import io.cucumber.java.en.And;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
@@ -37,8 +38,8 @@ public class Steps {
 		System.out.println("headers are" + response.headers());
 	}
 
-	@When("I validate response body of api endpoint")
-	public void responseBody() {
+	@When("I validate size of response body of api endpoint")
+	public void responseSize() {
 		jsonString = response.asString();
 		System.out.println("This is json string" + JsonPath.from(jsonString).get());
 		List<Map<String, String>> x = JsonPath.from(jsonString).get();
@@ -47,35 +48,18 @@ public class Steps {
 
 	}
 
-//	@When("I add a book to my reading list")
-//	public void addBookInList() {
-//		RestAssured.baseURI = BASE_URL;
-//		RequestSpecification request = RestAssured.given();
-//		request.header("Authorization", "Bearer " + token)
-//		.header("Content-Type", "application/json");
-//
-//		response = request.body("{ \"userId\": \"" + USER_ID + "\", " +
-//				"\"collectionOfIsbns\": [ { \"isbn\": \"" + bookId + "\" } ]}")
-//				.post("/BookStore/v1/Books");
-//	}
-//
+	@And("I validate content of response body")
+	public void responseBody() {
+		jsonString = response.asString();
+		Assert.assertEquals(jsonString.contains("id"), true);
 
-//
-//	@Then("The book is removed")
-//	public void bookIsRemoved() {
-//		Assert.assertEquals(401, response.getStatusCode());
-//
-//		RestAssured.baseURI = BASE_URL;
-//		RequestSpecification request = RestAssured.given();
-//
-//		request.header("Authorization", "Bearer " + token)
-//		.header("Content-Type", "application/json");
-//
-//		response = request.get("/Account/v1/User/" + USER_ID);
-//		Assert.assertEquals(401, response.getStatusCode());
-//
-//		jsonString = response.asString();
-//		List<Map<String, String>> booksOfUser = JsonPath.from(jsonString).get("books");
-//		Assert.assertNull(booksOfUser);
-//	}
+	}
+
+	@Given("User validates post request")
+	public void postRequest() {
+		Response postResponse = RestAssured.post(BASE_URL);
+		Assert.assertEquals(415, postResponse.getStatusCode());
+	}
+
+
 }

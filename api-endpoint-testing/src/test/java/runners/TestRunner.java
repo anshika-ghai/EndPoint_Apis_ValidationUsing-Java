@@ -7,7 +7,7 @@ import io.cucumber.junit.CucumberOptions;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features = "src/test/resources/functionalTests",
+        features = "src/test/resources/functionalTests/",
         glue = {"stepDefinitions"},
         monochrome = true,
         strict = true
