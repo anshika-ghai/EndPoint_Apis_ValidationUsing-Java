@@ -55,11 +55,5 @@ public class Steps {
 
 	}
 
-	@Given("User validates post request")
-	public void postRequest() {
-		Response postResponse = RestAssured.post(BASE_URL);
-		Assert.assertEquals(415, postResponse.getStatusCode());
-	}
-
 
 }
