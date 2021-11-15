@@ -20,7 +20,7 @@ public class Steps {
 	private static Response response;
 	private static String jsonString;
 
-	@Given("Api Endpoint 1 sends 200 status code")
+	@Given("To validate Api Endpoint 1 status code")
 	public void apiResponse() {
 		RestAssured.baseURI = BASE_URL;
 		RequestSpecification request = RestAssured.given();
@@ -29,7 +29,7 @@ public class Steps {
 
 	}
 
-	@When("Api header")
+	@When("To validate Api header")
 	public void responseHeaders() {
 		RestAssured.baseURI = BASE_URL;
 		RequestSpecification request = RestAssured.given();
@@ -38,7 +38,7 @@ public class Steps {
 		System.out.println("headers are" + response.headers());
 	}
 
-	@When("I validate size of response body of api endpoint")
+	@When("To validate size of response body of api endpoint")
 	public void responseSize() {
 		jsonString = response.asString();
 		System.out.println("This is json string" + JsonPath.from(jsonString).get());
@@ -48,10 +48,15 @@ public class Steps {
 
 	}
 
-	@And("I validate content of response body")
+	@And("To validate content of response body")
 	public void responseBody() {
 		jsonString = response.asString();
 		Assert.assertEquals(jsonString.contains("id"), true);
+		Assert.assertEquals(jsonString.contains("sensitive"), true);
+		Assert.assertEquals(jsonString.contains("topic"), true);
+		Assert.assertEquals(jsonString.contains("image"), true);
+		Assert.assertEquals(jsonString.contains("title"), true);
+
 
 	}
 
